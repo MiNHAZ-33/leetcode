@@ -1,12 +1,22 @@
 const mySqrt = (x) => {
-    if (x == 1) return 1;
+    if (x < 2) return x;
     let left = 0, right = x / 2;
-    while (left < right) {
-        const mid = Math.floor((left + right + 1) / 2);
+    let ans = 0
+    while (left <= right) {
+        const mid = Math.floor((left + right) / 2);
+        if (mid * mid == x) return mid;
+        if (mid * mid < x) {
+            ans = mid;
+            left = mid + 1;
+        }
+        else {
+            right = mid - 1;
+        }
 
     }
 
+    return ans;
 }
 
 
-console.log(mySqrt(4)); // 2
+console.log(mySqrt(8)); // 2

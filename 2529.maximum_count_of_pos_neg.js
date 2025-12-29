@@ -1,21 +1,31 @@
 const maximumCount = (nums) => {
-    let posIdx = 0, zeroCount = 0, left = 0, right = nums.length - 1;
-
-    while (left <= right) {
-        const mid = Math.floor((left + right) / 2);
-        if (nums[mid] == 0) {
-            zeroCount++;
-        }
-        if (nums[mid] > 0) {
-            posStart = mid;
-            right = mid - 1;
-        } else {
-            left = mid + 1;
+    let negIdx = -1, posIdx = nums.length;
+    const binarySearch = (left, right, isPositive) => {
+        while (left <= right) {
+            const mid = Math.floor((left + right) / 2);
+            if (isPositive) {
+                if (nums[mid] <= 0) {
+                    left = mid + 1;
+                } else {
+                    right = mid - 1;
+                    posIdx = mid;
+                }
+            } else {
+                if (nums[mid] < 0) {
+                    negIdx = mid;
+                    left = mid + 1;
+                } else {
+                    right = mid - 1;
+                }
+            }
         }
     }
 
-    return Math.max(negEnd + 1, posStart - nums.length + 1)
+    binarySearch(0, nums.length - 1, false);
+    binarySearch(0, nums.length - 1, true);
+
+    return Math.max(negIdx + 1, nums.length - posIdx);
 }
 
 
-console.log(maximumCount([-2, -1, -1, 0, 1, 2, 3])) // 3
+console.log(maximumCount([-3, -2, -1, 0, 0, 1, 2])) // 3

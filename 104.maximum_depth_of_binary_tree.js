@@ -5,7 +5,6 @@ var maxDepth = (root) => {
     let rightDepth = maxDepth(root.right);
 
     return Math.max(leftDepth, rightDepth) + 1;
-
 }
 
 
